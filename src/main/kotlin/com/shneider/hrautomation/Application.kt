@@ -1,11 +1,11 @@
-package com.shneider.hrautomationrest
+package com.shneider.hrautomation
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class HrAutomationRestApplication
+class Application
 
 fun main(args: Array<String>) {
-	runApplication<HrAutomationRestApplication>(*args)
+	runApplication<Application>(*args)
 }
