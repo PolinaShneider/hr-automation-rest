@@ -1,40 +1,27 @@
 package com.shneider.hrautomation
 
-import com.shneider.hrautomation.data.ApplicationDTO
-import com.shneider.hrautomation.data.Candidate
-import com.shneider.hrautomation.data.CandidateDTO
-import com.shneider.hrautomation.data.CandidateRepository
+import com.shneider.hrautomation.data.candidate.Candidate
 import com.shneider.hrautomation.request.ApplicationRequest
 import com.shneider.hrautomation.request.CandidateRequest
-import com.shneider.hrautomation.service.ApplicationService
-import org.bson.types.ObjectId
+import com.shneider.hrautomation.service.candidate.CandidateService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/candidate")
 class CandidateController(
-        private val candidateRepository: CandidateRepository,
-        private val applicationService: ApplicationService
+        private val candidateService: CandidateService
 ) {
-    @PostMapping
+    @PostMapping("/")
     fun createCandidate(@RequestBody request: CandidateRequest): ResponseEntity<Candidate> {
-        candidateRepository.save(CandidateDTO(
-                name = request.name,
-                description = request.bio,
-                worksInCompany = request.worksInCompany
-        ))
+        candidateService.createCandidate(request)
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    @PostMapping
+    @PostMapping("/apply")
     fun applyForPosition(@RequestBody request: ApplicationRequest): ResponseEntity<Candidate> {
-        applicationService.saveApplication(ApplicationDTO(
-                candidateId = ObjectId(request.candidateId),
-                positionId = ObjectId(request.positionId)
-        ))
+        candidateService.applyForPosition(request);
         return ResponseEntity(HttpStatus.CREATED)
     }
 
@@ -42,17 +29,7 @@ class CandidateController(
     fun updateCandidate(
             @RequestBody request: CandidateRequest, @PathVariable("id") id: String
     ): ResponseEntity<Candidate> {
-        val candidate = candidateRepository.findOneById(ObjectId(id))
-
-        candidateRepository.save(CandidateDTO(
-                id = candidate.id,
-                name = request.name,
-                description = request.bio,
-                worksInCompany = request.worksInCompany,
-                createdDate = candidate.createdDate,
-                modifiedDate = LocalDateTime.now()
-        ))
-
+        candidateService.updateCandidate(id, request)
         return ResponseEntity(HttpStatus.CREATED)
     }
 
@@ -60,8 +37,15 @@ class CandidateController(
     fun deleteCandidate(
             @PathVariable("id") id: String
     ): ResponseEntity<Candidate> {
-        candidateRepository.deleteById(id);
-
+        candidateService.deleteCandidate(id);
         return ResponseEntity(HttpStatus.ACCEPTED)
+    }
+
+    @GetMapping("/{id}")
+    fun getCandidate(
+            @PathVariable("id") id: String
+    ): ResponseEntity<Candidate> {
+        val result = candidateService.getCandidateById(id);
+        return ResponseEntity.ok(result);
     }
 }

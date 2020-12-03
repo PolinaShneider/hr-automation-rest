@@ -1,18 +1,18 @@
-package com.shneider.hrautomation.data
+package com.shneider.hrautomation.data.application
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
-@Document("Candidate")
-data class CandidateDTO (
+@Document
+data class ApplicationDTO(
         @Id
-        val id: ObjectId = ObjectId.get(),
-        val name: String,
-        val description: String,
+        var id: ObjectId = ObjectId.get(),
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val modifiedDate: LocalDateTime = LocalDateTime.now(),
-        val worksInCompany: Boolean,
-        val applicationIds: List<Int> = emptyList()
+        val candidateId: ObjectId,
+        val positionId: ObjectId,
+        val status: Status = Status.DRAFT,
+        val isRotation: Boolean = false
 )
