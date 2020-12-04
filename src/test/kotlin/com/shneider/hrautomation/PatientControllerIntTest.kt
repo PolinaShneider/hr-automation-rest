@@ -1,8 +1,5 @@
 package com.shneider.hrautomation
 
-import com.shneider.hrautomation.data.Patient
-import com.shneider.hrautomation.data.PatientRepository
-import com.shneider.hrautomation.request.PatientRequest
 import org.bson.types.ObjectId
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach

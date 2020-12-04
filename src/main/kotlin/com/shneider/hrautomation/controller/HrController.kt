@@ -1,4 +1,4 @@
-package com.shneider.hrautomation
+package com.shneider.hrautomation.controller
 
 import com.shneider.hrautomation.data.candidate.Candidate
 import com.shneider.hrautomation.data.candidate.CandidateDTO
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*
 class HrController(
         private val hrService: HrService
 ) {
-    @PostMapping("/update-position")
+    @PostMapping("/{id}/update-position")
     fun createCandidate(@PathVariable("id") id: String, @RequestBody request: PositionRequest): ResponseEntity<Candidate> {
         hrService.updatePosition(id, request)
         return ResponseEntity(HttpStatus.CREATED)

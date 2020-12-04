@@ -1,4 +1,4 @@
-package com.shneider.hrautomation
+package com.shneider.hrautomation.controller
 
 import com.shneider.hrautomation.data.candidate.Candidate
 import com.shneider.hrautomation.request.ApplicationRequest
@@ -13,12 +13,6 @@ import org.springframework.web.bind.annotation.*
 class CandidateController(
         private val candidateService: CandidateService
 ) {
-    @PostMapping("/")
-    fun createCandidate(@RequestBody request: CandidateRequest): ResponseEntity<Candidate> {
-        candidateService.createCandidate(request)
-        return ResponseEntity(HttpStatus.CREATED)
-    }
-
     @PostMapping("/apply")
     fun applyForPosition(@RequestBody request: ApplicationRequest): ResponseEntity<Candidate> {
         candidateService.applyForPosition(request);
@@ -31,14 +25,6 @@ class CandidateController(
     ): ResponseEntity<Candidate> {
         candidateService.updateCandidate(id, request)
         return ResponseEntity(HttpStatus.CREATED)
-    }
-
-    @DeleteMapping("/{id}")
-    fun deleteCandidate(
-            @PathVariable("id") id: String
-    ): ResponseEntity<Candidate> {
-        candidateService.deleteCandidate(id);
-        return ResponseEntity(HttpStatus.ACCEPTED)
     }
 
     @GetMapping("/{id}")
