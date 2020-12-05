@@ -1,6 +1,6 @@
 package com.shneider.hrautomation.data.interviewer
 
-import com.shneider.hrautomation.data.User
+import com.shneider.hrautomation.data.BaseUser
 import com.shneider.hrautomation.data.application.Status
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -10,7 +10,7 @@ class Interviewer(
         override var bio: String,
         override var id: String,
         var interviews: List<Int> = emptyList()
-) : User {
+) : BaseUser {
     fun notifyMe(status: Status) {
         //
     }

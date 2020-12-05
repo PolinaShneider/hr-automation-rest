@@ -1,7 +1,5 @@
 package com.shneider.hrautomation.data.position
 
-import com.shneider.hrautomation.data.User
-import com.shneider.hrautomation.data.application.Status
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document

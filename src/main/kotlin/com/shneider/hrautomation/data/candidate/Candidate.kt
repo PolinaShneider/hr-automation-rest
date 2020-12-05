@@ -1,6 +1,6 @@
 package com.shneider.hrautomation.data.candidate
 
-import com.shneider.hrautomation.data.User
+import com.shneider.hrautomation.data.BaseUser
 import com.shneider.hrautomation.data.application.Status
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -10,7 +10,7 @@ class Candidate(
         override var bio: String,
         override var id: String,
         var worksInCompany: Boolean
-) : User {
+) : BaseUser {
     companion object {
         fun create(result: CandidateDTO): Candidate {
             return Candidate(
