@@ -24,7 +24,7 @@ class CandidateServiceImpl(
         candidateRepository.deleteByUsername(username)
     }
 
-    override fun updateCandidate(username: String, request: CandidateRequest) {
+    override fun updateInfo(username: String, request: CandidateRequest) {
         val candidate = userRepository.findByUsername(username)
 
         if (candidate.isPresent) {

@@ -13,6 +13,6 @@ data class ApplicationDTO(
         val modifiedDate: LocalDateTime = LocalDateTime.now(),
         val candidateId: ObjectId,
         val positionId: ObjectId,
-        val status: Status = Status.DRAFT,
+        val status: Status = Status.PENDING,
         val isRotation: Boolean = false
 )

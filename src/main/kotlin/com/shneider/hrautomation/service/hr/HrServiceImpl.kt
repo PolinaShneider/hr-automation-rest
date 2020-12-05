@@ -8,6 +8,7 @@ import com.shneider.hrautomation.data.hr.HrRepository
 import com.shneider.hrautomation.data.interview.Feedback
 import com.shneider.hrautomation.data.interview.Interview
 import com.shneider.hrautomation.data.interviewer.InterviewerRepository
+import com.shneider.hrautomation.data.position.Position
 import com.shneider.hrautomation.data.user.User
 import com.shneider.hrautomation.data.user.UserRepository
 import com.shneider.hrautomation.request.HrRequest
@@ -45,24 +46,42 @@ class HrServiceImpl(
         positionService.updatePosition(positionId, request)
     }
 
-    override fun createPosition(request: PositionRequest) {
-        positionService.savePosition(request)
+    override fun createPosition(request: PositionRequest): Position {
+        return positionService.savePosition(request)
     }
 
     override fun notifyMe(status: Status, applicationId: String, feedback: Feedback) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun scheduleInterview(request: InterviewRequest): Interview {
-        return interviewService.schedule(request)
+    override fun scheduleInterview(applicationId: String): Interview {
+        val applicationInfo = applicationService.getApplicationById(applicationId)
+        val interviewer = interviewerService.getAvailableInterviewer()
+        val interview = interviewService.schedule(InterviewRequest(
+                positionId = applicationInfo.getPositionId(),
+                candidateId = applicationInfo.getCandidateId(),
+                interviewerId = interviewer.id
+        ))
+
+        interviewer.addUpcomingInterview(interview.id)
+
+        return interview
+    }
+
+    fun processInterviewFeedBack(applicationId: String): Application {
+        return when (interviewService.getInterviewFeedback(applicationId)) {
+            Feedback.ACCEPTED -> updateApplication(applicationId, Status.OFFER)
+            else -> updateApplication(applicationId, Status.REJECT)
+        }
     }
 
     override fun updateApplication(applicationId: String, status: Status): Application {
+        if (status == Status.INTERVIEW_PASSED) {
+            return processInterviewFeedBack(applicationId)
+        } else if (status == Status.INTERVIEW_UPCOMING) {
+            scheduleInterview(applicationId)
+        }
+
         return applicationService.updateApplicationStatus(applicationId, status)
     }
-
-    override fun getAvailableInterviewer(): Interviewer {
-        return interviewerService.getAvailableInterviewer()
-    }
-
 }

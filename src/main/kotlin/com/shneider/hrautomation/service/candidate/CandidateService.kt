@@ -11,7 +11,7 @@ interface CandidateService {
 
     fun getCandidateByUsername(username: String): Candidate
 
-    fun updateCandidate(username: String, request: CandidateRequest)
+    fun updateInfo(username: String, request: CandidateRequest)
 
     fun deleteCandidate(username: String)
 

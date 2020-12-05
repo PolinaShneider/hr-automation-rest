@@ -8,6 +8,7 @@ class Interview(
         var positionId: String,
         var status: Status = Status.INTERVIEW_UPCOMING,
         var interviewerId: String,
+        var id: String,
         var feedback: Feedback = Feedback.NONE
 ) {
     fun conduct(feedback: Feedback) {
@@ -22,7 +23,8 @@ class Interview(
                     positionId = result.positionId,
                     status = result.status,
                     feedback = result.feedback,
-                    interviewerId = result.interviewerId.toString()
+                    interviewerId = result.interviewerId.toString(),
+                    id = result.id.toString()
             )
         }
     }

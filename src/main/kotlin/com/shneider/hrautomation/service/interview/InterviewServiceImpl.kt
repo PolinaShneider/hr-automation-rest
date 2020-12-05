@@ -1,5 +1,7 @@
 package com.shneider.hrautomation.service.interview
 
+import com.shneider.hrautomation.data.application.Status
+import com.shneider.hrautomation.data.interview.Feedback
 import com.shneider.hrautomation.data.interview.Interview
 import com.shneider.hrautomation.data.interview.InterviewDTO
 import com.shneider.hrautomation.data.interview.InterviewRepository
@@ -11,6 +13,16 @@ import org.springframework.stereotype.Service
 class InterviewServiceImpl(
         private val interviewsRepository: InterviewRepository
 ) : InterviewService {
+    override fun getInterviewFeedback(id: String): Feedback {
+        val interview = getInterview(id)
+
+        return if (interview.status == Status.INTERVIEW_PASSED) {
+            interview.feedback
+        } else {
+            throw IllegalStateException("Interview has not passed yet")
+        }
+    }
+
     override fun schedule(request: InterviewRequest): Interview {
         val result = interviewsRepository.save(
                 InterviewDTO(

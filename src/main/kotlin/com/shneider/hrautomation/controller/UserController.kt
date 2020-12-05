@@ -37,7 +37,7 @@ class UserController {
     @PostMapping("/{username}/updateCandidateInfo")
     @PreAuthorize("hasRole('CANDIDATE')")
     fun updateCandidateInfo(@PathVariable("username") username: String, @Valid @RequestBody candidateRequest: CandidateRequest): ResponseEntity<Void> {
-        candidateService!!.updateCandidate(username, candidateRequest)
+        candidateService!!.updateInfo(username, candidateRequest)
 
         return ResponseEntity(HttpStatus.CREATED)
     }

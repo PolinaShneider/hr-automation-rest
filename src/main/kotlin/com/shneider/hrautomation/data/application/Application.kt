@@ -4,9 +4,17 @@ class Application(
         private var id: String,
         private var candidateId: String,
         private var positionId: String,
-        private var status: Status = Status.DRAFT,
+        private var status: Status = Status.PENDING,
         private var isRotation: Boolean = false
 ) {
+    fun getCandidateId(): String {
+        return candidateId
+    }
+
+    fun getPositionId(): String {
+        return positionId
+    }
+
     companion object {
         fun create(result: ApplicationDTO): Application {
             return Application(
@@ -21,7 +29,6 @@ class Application(
 }
 
 enum class Status {
-    DRAFT,
     PENDING,
     INTERVIEW_UPCOMING,
     INTERVIEW_PASSED,

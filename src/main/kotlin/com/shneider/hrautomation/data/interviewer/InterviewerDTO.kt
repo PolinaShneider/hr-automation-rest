@@ -14,5 +14,5 @@ data class InterviewerDTO (
         val description: String,
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val modifiedDate: LocalDateTime = LocalDateTime.now(),
-        val interviews: List<Int> = emptyList()
+        val interviews: List<String> = emptyList()
 )
