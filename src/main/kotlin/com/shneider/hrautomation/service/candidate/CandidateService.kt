@@ -9,11 +9,11 @@ interface CandidateService {
 
     fun getCandidateById(id: String): Candidate
 
-    fun updateCandidate(id: String, request: CandidateRequest)
+    fun getCandidateByUsername(username: String): Candidate
 
-    fun createCandidate(request: CandidateRequest)
+    fun updateCandidate(username: String, request: CandidateRequest)
 
-    fun deleteCandidate(id: String)
+    fun deleteCandidate(username: String)
 
     fun applyForPosition(request: ApplicationRequest)
 }

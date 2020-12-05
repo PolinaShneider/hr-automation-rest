@@ -1,6 +1,6 @@
 package com.shneider.hrautomation.request
 
-class InterviewRequest(
+data class InterviewRequest(
         val candidateId: String,
         val positionId: String,
         val interviewerId: String

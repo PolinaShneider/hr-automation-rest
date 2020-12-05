@@ -2,7 +2,6 @@ package com.shneider.hrautomation.data.position
 
 import org.springframework.data.mongodb.core.mapping.Document
 
-@Document
 class Position(
         var teamId: String,
         var title: String,

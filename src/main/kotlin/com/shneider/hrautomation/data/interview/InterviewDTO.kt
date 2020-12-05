@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
-@Document("Interview")
+@Document(collection = "Interviews")
 data class InterviewDTO(
         @Id
         val id: ObjectId = ObjectId.get(),

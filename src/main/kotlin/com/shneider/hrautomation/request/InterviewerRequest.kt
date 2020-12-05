@@ -1,7 +1,7 @@
 package com.shneider.hrautomation.request
 
-data class CandidateRequest(
+data class InterviewerRequest(
         val name: String,
         val description: String,
-        val worksInCompany: Boolean
+        val interviews: List<Int> = emptyList()
 )

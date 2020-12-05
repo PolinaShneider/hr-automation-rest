@@ -3,7 +3,6 @@ package com.shneider.hrautomation.data.interview
 import com.shneider.hrautomation.data.application.Status
 import org.springframework.data.mongodb.core.mapping.Document
 
-@Document
 class Interview(
         var candidateId: String,
         var positionId: String,

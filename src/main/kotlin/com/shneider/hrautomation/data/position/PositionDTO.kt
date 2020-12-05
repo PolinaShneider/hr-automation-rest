@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
-@Document("Position")
+@Document(collection = "Positions")
 data class PositionDTO(
         @Id
         val id: ObjectId = ObjectId.get(),

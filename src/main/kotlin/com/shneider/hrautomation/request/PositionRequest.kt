@@ -1,6 +1,6 @@
 package com.shneider.hrautomation.request
 
-class PositionRequest(
+data class PositionRequest(
         val title: String,
         val requirements: String,
         val isOpened: Boolean,
