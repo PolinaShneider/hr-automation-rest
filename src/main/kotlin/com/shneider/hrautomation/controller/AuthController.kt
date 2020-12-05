@@ -83,11 +83,8 @@ class AuthController {
         val strRoles = signUpRequest.roles
         val roles = HashSet<Role>()
 
-        println(strRoles)
-
-
         if (strRoles == null) {
-            val userRole = roleRepository!!.findByName(ERole.ROLE_USER)
+            val userRole = roleRepository!!.findByName(ERole.ROLE_CANDIDATE)
                     .orElseThrow { RuntimeException("Error: Role is not found.") }
             roles.add(userRole)
         } else {
@@ -98,13 +95,18 @@ class AuthController {
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(adminRole)
                     }
-                    "mod" -> {
-                        val modRole = roleRepository!!.findByName(ERole.ROLE_MODERATOR)
+                    "hr" -> {
+                        val hrRole = roleRepository!!.findByName(ERole.ROLE_HR)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
-                        roles.add(modRole)
+                        roles.add(hrRole)
+                    }
+                    "interviewer" -> {
+                        val interviewerRole = roleRepository!!.findByName(ERole.ROLE_INTERVIEWER)
+                                .orElseThrow { RuntimeException("Error: Role is not found.") }
+                        roles.add(interviewerRole)
                     }
                     else -> {
-                        val userRole = roleRepository!!.findByName(ERole.ROLE_USER)
+                        val userRole = roleRepository!!.findByName(ERole.ROLE_CANDIDATE)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(userRole)
                     }

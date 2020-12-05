@@ -16,20 +16,26 @@ class TestController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('HR') or hasRole('INTERVIEWER') or hasRole('ADMIN')")
     fun userAccess(): String {
         return "User Content."
     }
 
-    @GetMapping("/mod")
-    @PreAuthorize("hasRole('MODERATOR')")
-    fun moderatorAccess(): String {
-        return "Moderator Board."
+    @GetMapping("/hr")
+    @PreAuthorize("hasRole('HR') or hasRole('ADMIN')")
+    fun hrAccess(): String {
+        return "HR Board."
+    }
+
+    @GetMapping("/interviewer")
+    @PreAuthorize("hasRole('INTERVIEWER') or hasRole('ADMIN')")
+    fun interviewerAccess(): String {
+        return "Admin Board."
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    fun adminAccess(): String {
-        return "Admin Board."
+    @PreAuthorize("hasRole('CANDIDATE') or hasRole('ADMIN')")
+    fun candidateAccess(): String {
+        return "Candidate Board."
     }
 }

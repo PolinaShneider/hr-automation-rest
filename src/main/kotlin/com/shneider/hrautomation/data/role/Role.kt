@@ -3,18 +3,11 @@ package com.shneider.hrautomation.data.role
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
-@Document(collection = "roles")
-class Role {
+@Document(collection = "Roles")
+class Role(name: ERole) {
     @Id
     var id: String? = null
 
-    var name: ERole? = null
+    var name: ERole? = name
 
-    constructor() {
-
-    }
-
-    constructor(name: ERole) {
-        this.name = name
-    }
 }

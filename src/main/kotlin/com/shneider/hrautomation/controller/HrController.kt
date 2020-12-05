@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/hr")
+@RequestMapping("/api/hr")
 class HrController(
         private val hrService: HrService
 ) {
