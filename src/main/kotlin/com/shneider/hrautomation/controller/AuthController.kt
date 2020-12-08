@@ -24,30 +24,21 @@ import javax.validation.Valid
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-class AuthController {
-    @Autowired
-    internal var authenticationManager: AuthenticationManager? = null
-
-    @Autowired
-    internal var userRepository: UserRepository? = null
-
-    @Autowired
-    internal var roleRepository: RoleRepository? = null
-
-    @Autowired
-    internal var encoder: PasswordEncoder? = null
-
-    @Autowired
-    internal var jwtUtils: JwtUtils? = null
-
+class AuthController(
+        private val authenticationManager: AuthenticationManager,
+        private val userRepository: UserRepository,
+        private val roleRepository: RoleRepository,
+        private val encoder: PasswordEncoder,
+        private val jwtUtils: JwtUtils
+) {
     @PostMapping("/signin")
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<*> {
 
-        val authentication = authenticationManager!!.authenticate(
+        val authentication = authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password))
 
         SecurityContextHolder.getContext().authentication = authentication
-        val jwt = jwtUtils!!.generateJwtToken(authentication)
+        val jwt = jwtUtils.generateJwtToken(authentication)
 
         val userDetails = authentication.principal as UserDetailsImpl
         val roles = userDetails.authorities
@@ -63,13 +54,13 @@ class AuthController {
 
     @PostMapping("/signup")
     fun registerUser(@Valid @RequestBody signUpRequest: SignupRequest): ResponseEntity<*> {
-        if (userRepository!!.existsByUsername(signUpRequest.username!!)!!) {
+        if (userRepository.existsByUsername(signUpRequest.username!!)!!) {
             return ResponseEntity
                     .badRequest()
                     .body(MessageResponse("Error: Username is already taken!"))
         }
 
-        if (userRepository!!.existsByEmail(signUpRequest.email!!)!!) {
+        if (userRepository.existsByEmail(signUpRequest.email!!)!!) {
             return ResponseEntity
                     .badRequest()
                     .body(MessageResponse("Error: Email is already in use!"))
@@ -78,35 +69,35 @@ class AuthController {
         // Create new user's account
         val user = User(signUpRequest.username!!,
                 signUpRequest.email!!,
-                encoder!!.encode(signUpRequest.password))
+                encoder.encode(signUpRequest.password))
 
         val strRoles = signUpRequest.roles
         val roles = HashSet<Role>()
 
         if (strRoles == null) {
-            val userRole = roleRepository!!.findByName(ERole.ROLE_CANDIDATE)
+            val userRole = roleRepository.findByName(ERole.ROLE_CANDIDATE)
                     .orElseThrow { RuntimeException("Error: Role is not found.") }
             roles.add(userRole)
         } else {
             strRoles.forEach { role ->
                 when (role) {
                     "admin" -> {
-                        val adminRole = roleRepository!!.findByName(ERole.ROLE_ADMIN)
+                        val adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(adminRole)
                     }
                     "hr" -> {
-                        val hrRole = roleRepository!!.findByName(ERole.ROLE_HR)
+                        val hrRole = roleRepository.findByName(ERole.ROLE_HR)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(hrRole)
                     }
                     "interviewer" -> {
-                        val interviewerRole = roleRepository!!.findByName(ERole.ROLE_INTERVIEWER)
+                        val interviewerRole = roleRepository.findByName(ERole.ROLE_INTERVIEWER)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(interviewerRole)
                     }
                     else -> {
-                        val userRole = roleRepository!!.findByName(ERole.ROLE_CANDIDATE)
+                        val userRole = roleRepository.findByName(ERole.ROLE_CANDIDATE)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(userRole)
                     }
@@ -115,7 +106,7 @@ class AuthController {
         }
 
         user.roles = roles
-        userRepository!!.save(user)
+        userRepository.save(user)
 
         return ResponseEntity.ok(MessageResponse("User registered successfully!"))
     }
