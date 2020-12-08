@@ -9,11 +9,11 @@ import java.time.LocalDateTime
 data class CandidateDTO (
         @Id
         val id: ObjectId = ObjectId.get(),
-        val name: String,
-        val description: String,
+        val name: String = "Anonymous User",
+        val description: String = "",
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val modifiedDate: LocalDateTime = LocalDateTime.now(),
-        val worksInCompany: Boolean,
+        val worksInCompany: Boolean = false,
         val username: String,
         val applicationIds: List<Int> = emptyList()
 )

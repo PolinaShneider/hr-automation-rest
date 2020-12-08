@@ -1,15 +1,13 @@
 package com.shneider.hrautomation.service.hr
 
-import com.shneider.hrautomation.data.interviewer.Interviewer
 import com.shneider.hrautomation.data.application.Application
 import com.shneider.hrautomation.data.application.Status
+import com.shneider.hrautomation.data.hr.Hr
 import com.shneider.hrautomation.data.hr.HrDTO
 import com.shneider.hrautomation.data.hr.HrRepository
 import com.shneider.hrautomation.data.interview.Feedback
 import com.shneider.hrautomation.data.interview.Interview
-import com.shneider.hrautomation.data.interviewer.InterviewerRepository
 import com.shneider.hrautomation.data.position.Position
-import com.shneider.hrautomation.data.user.User
 import com.shneider.hrautomation.data.user.UserRepository
 import com.shneider.hrautomation.request.HrRequest
 import com.shneider.hrautomation.request.InterviewRequest
@@ -18,6 +16,7 @@ import com.shneider.hrautomation.service.application.ApplicationService
 import com.shneider.hrautomation.service.interview.InterviewService
 import com.shneider.hrautomation.service.interviewer.InterviewerService
 import com.shneider.hrautomation.service.position.PositionService
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 
 
@@ -30,6 +29,10 @@ class HrServiceImpl(
         private val hrRepository: HrRepository,
         private val userRepository: UserRepository
 ) : HrService {
+    override fun getHrById(id: String): Hr {
+        return Hr.create(hrRepository.findOneById(ObjectId(id)))
+    }
+
     override fun updateInfo(username: String, hrRequest: HrRequest) {
         val hr = userRepository.findByUsername(username)
 

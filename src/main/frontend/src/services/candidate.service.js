@@ -4,15 +4,20 @@ import authHeader from './auth-header';
 const API_URL = 'http://localhost:8080/api/candidate/';
 
 class CandidateService {
-  getMe(id) {
-    return axios.get(API_URL + 'id?=' + id, { headers: authHeader() });
+  getMe(username) {
+    return axios.get(API_URL + username, {headers: authHeader()});
   }
 
-  apply(positionId, userId) {
-      return axios.post(API_URL + 'apply', {
-          positionId,
-          userId
-      }, { headers: authHeader() });
+  apply(request) {
+    return axios.post(API_URL + 'apply', request, {headers: authHeader()});
+  }
+
+  getMyApplications(id) {
+    return axios.get(API_URL + `${id}/applications`, {headers: authHeader()});
+  }
+
+  getMyInterviews(id) {
+    return axios.get(API_URL + `${id}/interviews`, {headers: authHeader()});
   }
 }
 

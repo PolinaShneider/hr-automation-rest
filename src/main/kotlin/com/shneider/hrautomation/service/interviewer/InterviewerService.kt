@@ -14,4 +14,6 @@ interface InterviewerService {
     fun getInterviewer(id: String): Interviewer
 
     fun updateInfo(username: String, interviewerRequest: InterviewerRequest)
+
+    fun getInterviewerById(id: String): Interviewer
 }

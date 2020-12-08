@@ -9,9 +9,9 @@ import java.time.LocalDateTime
 data class InterviewerDTO (
         @Id
         val id: ObjectId = ObjectId.get(),
-        val name: String,
+        val name: String = "Anonymous User",
         val username: String,
-        val description: String,
+        val description: String = "",
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val modifiedDate: LocalDateTime = LocalDateTime.now(),
         val interviews: List<String> = emptyList()

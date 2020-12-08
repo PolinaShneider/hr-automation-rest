@@ -1,5 +1,11 @@
 package com.shneider.hrautomation.controller
 
+import com.shneider.hrautomation.data.candidate.CandidateDTO
+import com.shneider.hrautomation.data.candidate.CandidateRepository
+import com.shneider.hrautomation.data.hr.HrDTO
+import com.shneider.hrautomation.data.hr.HrRepository
+import com.shneider.hrautomation.data.interviewer.InterviewerDTO
+import com.shneider.hrautomation.data.interviewer.InterviewerRepository
 import com.shneider.hrautomation.data.role.ERole
 import com.shneider.hrautomation.data.role.Role
 import com.shneider.hrautomation.data.role.RoleRepository
@@ -27,6 +33,9 @@ import javax.validation.Valid
 class AuthController(
         private val authenticationManager: AuthenticationManager,
         private val userRepository: UserRepository,
+        private val hrRepository: HrRepository,
+        private val interviewerRepository: InterviewerRepository,
+        private val candidateRepository: CandidateRepository,
         private val roleRepository: RoleRepository,
         private val encoder: PasswordEncoder,
         private val jwtUtils: JwtUtils
@@ -90,16 +99,22 @@ class AuthController(
                         val hrRole = roleRepository.findByName(ERole.ROLE_HR)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(hrRole)
+
+                        hrRepository.save(HrDTO(username = signUpRequest.username!!))
                     }
                     "interviewer" -> {
                         val interviewerRole = roleRepository.findByName(ERole.ROLE_INTERVIEWER)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(interviewerRole)
+
+                        interviewerRepository.save(InterviewerDTO(username = signUpRequest.username!!))
                     }
                     else -> {
                         val userRole = roleRepository.findByName(ERole.ROLE_CANDIDATE)
                                 .orElseThrow { RuntimeException("Error: Role is not found.") }
                         roles.add(userRole)
+
+                        candidateRepository.save(CandidateDTO(username = signUpRequest.username!!))
                     }
                 }
             }

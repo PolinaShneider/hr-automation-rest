@@ -1,6 +1,7 @@
 package com.shneider.hrautomation.controller
 
 import com.shneider.hrautomation.data.interview.Interview
+import com.shneider.hrautomation.data.interviewer.Interviewer
 import com.shneider.hrautomation.request.FeedbackRequest
 import com.shneider.hrautomation.service.interview.InterviewService
 import com.shneider.hrautomation.service.interviewer.InterviewerService
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
+@CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/interviewer")
 @PreAuthorize("hasRole('INTERVIEWER')")
@@ -30,5 +32,13 @@ class InterviewerController(
     ): ResponseEntity<List<Interview>> {
         val interviews = interviewService.getAllByInterviewerId(id)
         return ResponseEntity(interviews, HttpStatus.OK)
+    }
+
+    @GetMapping("/{id}")
+    fun getInterviewer(
+            @PathVariable("id") id: String
+    ): ResponseEntity<Interviewer> {
+        val result = interviewerService.getInterviewerById(id);
+        return ResponseEntity.ok(result);
     }
 }

@@ -17,6 +17,10 @@ class InterviewerServiceImpl(
         private val interviewService: InterviewService,
         private val userRepository: UserRepository
 ) : InterviewerService {
+    override fun getInterviewerById(id: String): Interviewer {
+        return Interviewer.create(interviewersRepository.findOneById(ObjectId(id)))
+    }
+
     override fun updateInfo(username: String, interviewerRequest: InterviewerRequest) {
         val interviewer = userRepository.findByUsername(username)
 

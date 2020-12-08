@@ -3,6 +3,7 @@ package com.shneider.hrautomation.controller
 import com.shneider.hrautomation.data.application.Application
 import com.shneider.hrautomation.data.application.Status
 import com.shneider.hrautomation.data.candidate.Candidate
+import com.shneider.hrautomation.data.hr.Hr
 import com.shneider.hrautomation.data.position.Position
 import com.shneider.hrautomation.data.team.Team
 import com.shneider.hrautomation.request.ApplicationRequest
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
+@CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/hr")
 @PreAuthorize("hasRole('HR')")
@@ -42,8 +44,8 @@ class HrController(
         return ResponseEntity(positionService.listAllPositions(), HttpStatus.OK)
     }
 
-    @GetMapping("/base-info")
-    fun getBaseInfo(): ResponseEntity<List<Team>> {
+    @GetMapping("/get-teams")
+    fun getTeams(): ResponseEntity<List<Team>> {
         return ResponseEntity(teamService.listAllTeams(), HttpStatus.OK)
     }
 
@@ -58,7 +60,15 @@ class HrController(
     }
 
     @PostMapping("/{id}/update-application")
-    fun updateApplications(@PathVariable("id") id: String, status: Status): ResponseEntity<Application> {
+    fun updateApplication(@PathVariable("id") id: String, status: Status): ResponseEntity<Application> {
         return ResponseEntity(hrService.updateApplication(id, status), HttpStatus.CREATED)
+    }
+
+    @GetMapping("/{id}")
+    fun getHr(
+            @PathVariable("id") id: String
+    ): ResponseEntity<Hr> {
+        val result = hrService.getHrById(id);
+        return ResponseEntity.ok(result);
     }
 }

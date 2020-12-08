@@ -7,4 +7,6 @@ interface InterviewRepository : MongoRepository<InterviewDTO, String> {
     fun findOneById(id: ObjectId): InterviewDTO
 
     fun findAllByInterviewerId(interviewerId: ObjectId): List<InterviewDTO>
+
+    fun findAllByCandidateId(candidateId: String): List<InterviewDTO>
 }

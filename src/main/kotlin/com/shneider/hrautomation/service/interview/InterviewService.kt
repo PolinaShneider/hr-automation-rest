@@ -12,6 +12,8 @@ interface InterviewService {
 
     fun getAllByInterviewerId(id: String): List<Interview>
 
+    fun getAllByCandidateId(id: String): List<Interview>
+
     fun getInterview(id: String): Interview
 
     fun getInterviewFeedback(id: String): Feedback

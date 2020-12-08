@@ -13,6 +13,12 @@ import org.springframework.stereotype.Service
 class InterviewServiceImpl(
         private val interviewsRepository: InterviewRepository
 ) : InterviewService {
+    override fun getAllByCandidateId(id: String): List<Interview> {
+        return interviewsRepository.findAllByCandidateId(id).map {
+            Interview.create(it)
+        }
+    }
+
     override fun getInterviewFeedback(id: String): Feedback {
         val interview = getInterview(id)
 
