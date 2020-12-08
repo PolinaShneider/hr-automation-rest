@@ -1,33 +1,32 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>{{content}}</h3>
+      <h3>Сервис для осуществления внутреннего и внешнего найма сотрудников</h3>
+        <br><br>
+        <h4>Внешний найм</h4>
+        <ol>
+            <li>Кандидат извне откликается на вакансию</li>
+            <li>HR смотрит его заявку</li>
+            <li>Если кандидат соответствует требованиям, HR назначает кандидату интервью с разработчиком компании</li>
+            <li>Интервьюер собеседует кандидата и вносит фидбэк</li>
+            <li>HR сообщает кандидату о результатах собеседования</li>
+        </ol>
+
+        <h4>Внутренний найм</h4>
+        <ol>
+            <li>Кандидат уже работает в компании, и хочет сменить команду/направление разработки</li>
+            <li>HR смотрит его заявку</li>
+            <li>Если есть открытые вакансии в командах, соответствующие интересам кандидата, HR сообщает об этом</li>
+            <li>HR назначает собеседование с ее руководителем</li>
+            <li>Руководитель команды проводит собеседование и вносит фидбэк</li>
+            <li>HR сообщает кандидату о результатах собеседования</li>
+        </ol>
     </header>
   </div>
 </template>
 
 <script>
-import UserService from '../services/user.service';
-
 export default {
   name: 'Home',
-  data() {
-    return {
-      content: ''
-    };
-  },
-  mounted() {
-    UserService.getPublicContent().then(
-      response => {
-        this.content = response.data;
-      },
-      error => {
-        this.content =
-          (error.response && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );
-  }
 };
 </script>

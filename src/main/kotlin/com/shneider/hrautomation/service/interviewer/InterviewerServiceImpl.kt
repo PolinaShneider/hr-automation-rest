@@ -32,8 +32,10 @@ class InterviewerServiceImpl(
 
     override fun conductInterview(id: String, feedback: Feedback): Interview {
         val interview = interviewService.getInterview(id)
+        val interviewer = interviewersRepository.findOneById(ObjectId(interview.interviewerId))
 
         interview.conduct(feedback)
+        interviewer.interviews - id
 
         return interview;
     }

@@ -7,7 +7,7 @@ import com.shneider.hrautomation.request.CandidateRequest
 
 interface CandidateService {
 
-    fun getCandidateById(id: String): Candidate
+    fun getCandidateById(username: String): Candidate
 
     fun getCandidateByUsername(username: String): Candidate
 
