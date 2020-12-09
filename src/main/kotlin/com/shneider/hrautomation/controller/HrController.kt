@@ -2,11 +2,9 @@ package com.shneider.hrautomation.controller
 
 import com.shneider.hrautomation.data.application.Application
 import com.shneider.hrautomation.data.application.Status
-import com.shneider.hrautomation.data.candidate.Candidate
 import com.shneider.hrautomation.data.hr.Hr
 import com.shneider.hrautomation.data.position.Position
 import com.shneider.hrautomation.data.team.Team
-import com.shneider.hrautomation.request.ApplicationRequest
 import com.shneider.hrautomation.request.PositionRequest
 import com.shneider.hrautomation.service.application.ApplicationService
 import com.shneider.hrautomation.service.hr.HrService
@@ -68,7 +66,7 @@ class HrController(
     fun getHr(
             @PathVariable("id") id: String
     ): ResponseEntity<Hr> {
-        val result = hrService.getHrById(id);
+        val result = hrService.getHrByUsername(id);
         return ResponseEntity.ok(result);
     }
 }

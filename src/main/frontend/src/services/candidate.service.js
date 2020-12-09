@@ -19,6 +19,10 @@ class CandidateService {
   getMyInterviews(id) {
     return axios.get(API_URL + `${id}/interviews`, {headers: authHeader()});
   }
+
+  getPositions() {
+    return axios.get(API_URL + 'open-positions', { headers: authHeader() });
+  }
 }
 
 export default new CandidateService();

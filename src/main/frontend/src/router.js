@@ -1,8 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+// Common
 import Home from './views/Home.vue';
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
+import Login from './views/user/Login.vue';
+import Register from './views/user/Register.vue';
+import Positions from './views/hr/Positions.vue';
+// Candidate
+import OpenPositions from "./views/candidate/OpenPositions";
+import MyApplications from "./views/candidate/MyApplications";
+import MyInterviews from "./views/candidate/MyInterviews";
+// Interviewer
+import UpcomingInterviews from "./views/interviewer/UpcomingInterviews";
 
 Vue.use(Router);
 
@@ -12,10 +20,6 @@ export const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
-    },
-    {
-      path: '/home',
       component: Home
     },
     {
@@ -30,26 +34,34 @@ export const router = new Router({
       path: '/profile',
       name: 'profile',
       // lazy-loaded
-      component: () => import('./views/Profile.vue')
+      component: () => import('./views/user/Profile.vue')
     },
     {
-      path: '/admin',
-      name: 'admin',
-      // lazy-loaded
-      component: () => import('./views/BoardAdmin.vue')
+      path: '/home',
+      component: Home
+    },
+    // Candidate routes
+    {
+      path: '/open-positions',
+      component: OpenPositions
     },
     {
-      path: '/mod',
-      name: 'moderator',
-      // lazy-loaded
-      component: () => import('./views/BoardModerator.vue')
+      path: '/my-applications',
+      component: MyApplications
     },
     {
-      path: '/user',
-      name: 'user',
-      // lazy-loaded
-      component: () => import('./views/BoardUser.vue')
-    }
+      path: '/my-interviews',
+      component: MyInterviews
+    },
+    {
+      path: '/positions',
+      component: Positions
+    },
+    // Interviewer routes
+    {
+      path: '/upcoming-interviews',
+      component: UpcomingInterviews
+    },
   ]
 });
 

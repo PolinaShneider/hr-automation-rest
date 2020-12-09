@@ -14,5 +14,5 @@ data class PositionDTO(
         var teamId: String,
         var title: String,
         var requirements: String,
-        var isOpened: Boolean = true
+        var open: Boolean = true
 )

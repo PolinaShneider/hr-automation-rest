@@ -3,9 +3,10 @@ package com.shneider.hrautomation.controller
 import com.shneider.hrautomation.data.application.Application
 import com.shneider.hrautomation.data.candidate.Candidate
 import com.shneider.hrautomation.data.interview.Interview
+import com.shneider.hrautomation.data.position.Position
 import com.shneider.hrautomation.request.ApplicationRequest
-import com.shneider.hrautomation.request.CandidateRequest
 import com.shneider.hrautomation.service.candidate.CandidateService
+import com.shneider.hrautomation.service.position.PositionService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/candidate")
 @PreAuthorize("hasRole('CANDIDATE')")
 class CandidateController(
-        private val candidateService: CandidateService
+        private val candidateService: CandidateService,
+        private val positionService: PositionService
 ) {
     @PostMapping("/apply")
     fun applyForPosition(@RequestBody request: ApplicationRequest): ResponseEntity<Candidate> {
@@ -45,6 +47,12 @@ class CandidateController(
             @PathVariable("id") id: String
     ): ResponseEntity<List<Interview>> {
         val result = candidateService.getMyInterviews(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/open-positions")
+    fun getOpenPositions(): ResponseEntity<List<Position>> {
+        val result = positionService.listOpenPositions()
         return ResponseEntity.ok(result);
     }
 }

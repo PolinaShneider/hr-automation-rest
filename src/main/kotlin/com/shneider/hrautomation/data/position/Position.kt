@@ -1,7 +1,5 @@
 package com.shneider.hrautomation.data.position
 
-import org.springframework.data.mongodb.core.mapping.Document
-
 class Position(
         var teamId: String,
         var title: String,
@@ -14,7 +12,7 @@ class Position(
                     teamId = result.id.toString(),
                     title = result.title,
                     requirements = result.requirements,
-                    isOpened = result.isOpened
+                    isOpened = result.open
             )
         }
     }

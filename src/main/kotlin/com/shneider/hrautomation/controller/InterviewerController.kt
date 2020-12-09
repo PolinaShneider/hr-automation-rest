@@ -38,7 +38,7 @@ class InterviewerController(
     fun getInterviewer(
             @PathVariable("id") id: String
     ): ResponseEntity<Interviewer> {
-        val result = interviewerService.getInterviewerById(id);
+        val result = interviewerService.getInterviewerByUsername(id);
         return ResponseEntity.ok(result);
     }
 }

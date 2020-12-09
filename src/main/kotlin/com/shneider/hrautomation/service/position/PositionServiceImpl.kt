@@ -20,7 +20,7 @@ class PositionServiceImpl(
                         title = request.title,
                         requirements = request.requirements,
                         teamId = request.teamId,
-                        isOpened = request.isOpened
+                        open = request.isOpened
                 )
         )
     }
@@ -32,7 +32,7 @@ class PositionServiceImpl(
     }
 
     override fun listOpenPositions(): List<Position> {
-        return positionRepository.findAllByOpenedTrue().map {
+        return positionRepository.findAllByOpenTrue().map {
             Position.create(it)
         }
     }
@@ -46,7 +46,7 @@ class PositionServiceImpl(
                 PositionDTO(
                         teamId = request.teamId,
                         title = request.title,
-                        isOpened = request.isOpened,
+                        open = request.isOpened,
                         requirements = request.requirements
                 )
         )

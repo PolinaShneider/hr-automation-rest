@@ -29,8 +29,8 @@ class HrServiceImpl(
         private val hrRepository: HrRepository,
         private val userRepository: UserRepository
 ) : HrService {
-    override fun getHrById(id: String): Hr {
-        return Hr.create(hrRepository.findOneById(ObjectId(id)))
+    override fun getHrByUsername(username: String): Hr {
+        return Hr.create(hrRepository.findByUsername(username))
     }
 
     override fun updateInfo(username: String, hrRequest: HrRequest) {
