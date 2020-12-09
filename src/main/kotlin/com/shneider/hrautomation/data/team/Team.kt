@@ -1,13 +1,13 @@
 package com.shneider.hrautomation.data.team
 
 class Team(
-        var id: String,
-        var title: String
+        val alias: String,
+        val title: String
 ) {
     companion object {
         fun create(result: TeamDTO): Team {
             return Team(
-                    id = result.id.toString(),
+                    alias = result.alias,
                     title = result.title
             )
         }

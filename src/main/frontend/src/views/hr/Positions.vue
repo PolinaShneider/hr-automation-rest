@@ -10,7 +10,8 @@
             There are no opened positions yet. Open one?
         </div>
         <div v-else class="position" v-for="(item, index) in positions" :key="index">
-            {{item.title}}
+            <b>{{item.title}}</b><br>
+            Team: {{getTeamTitle(item.teamId)}}
         </div>
         <div class="modal-wrapper" v-if="modalIsOpen">
             <span class="close" @click="modalIsOpen = false">Close</span>
@@ -32,12 +33,12 @@
                     <label for="team" class="col-form-label">Team</label><br>
                     <select id="team" v-model="currentPosition.team">
                         <option disabled value="">Please select one</option>
-                        <option v-for="(item, index) in teams" :key="index" :value="item.id">
+                        <option v-for="(item, index) in teams" :key="index" :value="item.alias">
                             {{item.title}}
                         </option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary" @click="savePosition">Save</button>
+                <button type="button" class="btn btn-primary" @click="savePosition">Save</button>
             </form>
         </div>
     </div>
@@ -83,6 +84,10 @@
           console.error('Error loading teams')
         })
       },
+      getTeamTitle(id) {
+        const team = this.teams.find(team => team.alias === id);
+        return team ? team.title : '';
+      },
       savePosition() {
         if (!this.currentPosition.id) {
           HrService.createPosition({
@@ -91,7 +96,7 @@
             isOpened: this.currentPosition.isOpened,
             teamId: this.currentPosition.team,
           }).then((data) => {
-            console.log(data);
+            // console.log(data);
           })
         } else {
           HrService.updatePosition(this.currentPosition.id, {
@@ -100,7 +105,7 @@
             isOpened: this.currentPosition.isOpened,
             teamId: this.currentPosition.team,
           }).then((data) => {
-            console.log(data)
+            // console.log(data)
           })
         }
 

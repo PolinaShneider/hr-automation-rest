@@ -9,7 +9,7 @@ class Position(
     companion object {
         fun create(result: PositionDTO): Position {
             return Position(
-                    teamId = result.id.toString(),
+                    teamId = result.teamId,
                     title = result.title,
                     requirements = result.requirements,
                     isOpened = result.open
