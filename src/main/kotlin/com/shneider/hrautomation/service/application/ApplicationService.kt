@@ -20,4 +20,6 @@ interface ApplicationService {
     fun updateApplicationStatus(applicationId: String, status: Status): Application
 
     fun postInterviewUpdate(candidateId: ObjectId, positionId: ObjectId, status: Status)
+
+    fun linkInterview(applicationId: String, interviewId: String)
 }

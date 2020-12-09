@@ -10,6 +10,10 @@
             <b>{{getPositionTitle(item.positionId)}}</b><br>
             <span class="badge" :class="getStatusClass(item.status)">
                 Status: {{item.status}}
+            </span><br>
+            <span
+                    @click="(e) => interviewRedirect(e, item.interviewId)" class="interview-link">
+                Interview: <span class="badge badge-dark">{{item.interviewId || 'NONE'}}</span>
             </span>
         </div>
         <div v-if="modalIsOpen" class="modal-wrapper">
@@ -123,6 +127,25 @@
         this.selectedApplication = null;
         this.status = '';
         this.interviewer = '';
+      },
+      interviewRedirect(e, link) {
+        e.stopImmediatePropagation();
+        if (link) {
+          HrService.getInterviewInfo(link).then(({data}) => {
+            const feedback = data.feedback;
+
+
+            console.log(data.feedback);
+
+            if (feedback === 'ACCEPTED') {
+              alert('Фидбэк положительный')
+            } else if (feedback === 'FAIL') {
+              alert('Фидбэк отрицательный')
+            } else {
+              alert('Фидбэка пока нет')
+            }
+          })
+        }
       }
     }
   }
@@ -152,5 +175,10 @@
         left: 50%;
         padding: 15px;
         min-width: 300px;
+    }
+
+    .interview-link {
+        position: relative;
+        z-index: 10;
     }
 </style>

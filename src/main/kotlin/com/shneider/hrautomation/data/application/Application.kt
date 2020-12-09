@@ -5,7 +5,8 @@ class Application(
         private var candidateId: String,
         private var positionId: String,
         var status: Status = Status.PENDING,
-        var isRotation: Boolean = false
+        var isRotation: Boolean = false,
+        var interviewId: String? = null
 ) {
     fun getCandidateId(): String {
         return candidateId
@@ -26,7 +27,8 @@ class Application(
                     candidateId = result.candidateId.toString(),
                     positionId = result.positionId.toString(),
                     status = result.status,
-                    isRotation = result.rotation
+                    isRotation = result.rotation,
+                    interviewId = result.interviewId
             )
         }
     }

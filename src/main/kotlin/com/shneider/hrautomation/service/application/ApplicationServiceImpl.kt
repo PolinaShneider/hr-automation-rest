@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service
 class ApplicationServiceImpl(
         private val applicationRepository: ApplicationRepository
 ) : ApplicationService {
+    override fun linkInterview(applicationId: String, interviewId: String) {
+        val dto = applicationRepository.findOneById(ObjectId(applicationId))
+        applicationRepository.save(dto.copy(interviewId = interviewId))
+    }
+
     override fun postInterviewUpdate(candidateId: ObjectId, positionId: ObjectId, status: Status) {
         val dto = applicationRepository.findByCandidateIdAndPositionId(candidateId, positionId)
         applicationRepository.save(dto.copy(status = status))

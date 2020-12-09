@@ -14,5 +14,6 @@ data class ApplicationDTO(
         val candidateId: ObjectId,
         val positionId: ObjectId,
         val status: Status = Status.PENDING,
-        val rotation: Boolean = false
+        val rotation: Boolean = false,
+        val interviewId: String? = null
 )

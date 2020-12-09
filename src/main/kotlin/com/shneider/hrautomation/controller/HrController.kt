@@ -2,6 +2,7 @@ package com.shneider.hrautomation.controller
 
 import com.shneider.hrautomation.data.application.Application
 import com.shneider.hrautomation.data.hr.Hr
+import com.shneider.hrautomation.data.interview.Interview
 import com.shneider.hrautomation.data.interviewer.Interviewer
 import com.shneider.hrautomation.data.position.Position
 import com.shneider.hrautomation.data.team.Team
@@ -9,6 +10,7 @@ import com.shneider.hrautomation.request.PositionRequest
 import com.shneider.hrautomation.request.StatusRequest
 import com.shneider.hrautomation.service.application.ApplicationService
 import com.shneider.hrautomation.service.hr.HrService
+import com.shneider.hrautomation.service.interview.InterviewService
 import com.shneider.hrautomation.service.interviewer.InterviewerService
 import com.shneider.hrautomation.service.position.PositionService
 import com.shneider.hrautomation.service.team.TeamService
@@ -25,6 +27,7 @@ class HrController(
         private val hrService: HrService,
         private val positionService: PositionService,
         private val applicationService: ApplicationService,
+        private val interviewService: InterviewService,
         private val teamService: TeamService,
         private val interviewerService: InterviewerService
 ) {
@@ -63,6 +66,11 @@ class HrController(
     @GetMapping("/get-rotation-applications")
     fun getRotationApplications(): ResponseEntity<List<Application>> {
         return ResponseEntity(applicationService.listRotationApplications(), HttpStatus.OK)
+    }
+
+    @GetMapping("/get-interview-info/{id}")
+    fun getInterviewInfo(@PathVariable("id") id: String): ResponseEntity<Interview> {
+        return ResponseEntity(interviewService.getInterview(id), HttpStatus.OK)
     }
 
     @PostMapping("/{id}/update-application")

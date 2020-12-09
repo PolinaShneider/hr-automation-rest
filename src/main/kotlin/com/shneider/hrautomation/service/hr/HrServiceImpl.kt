@@ -82,7 +82,8 @@ class HrServiceImpl(
         if (request.status == Status.INTERVIEW_PASSED) {
             return processInterviewFeedBack(applicationId)
         } else if (request.status == Status.INTERVIEW_UPCOMING) {
-            scheduleInterview(applicationId, request)
+            val interview = scheduleInterview(applicationId, request)
+            applicationService.linkInterview(applicationId, interview.id)
         }
 
         return applicationService.updateApplicationStatus(applicationId, request.status)

@@ -32,6 +32,10 @@ class HrService {
     return axios.get(API_URL + 'get-interviewers', { headers: authHeader() });
   }
 
+  getInterviewInfo(id) {
+    return axios.get(API_URL + `get-interview-info/${id}`, { headers: authHeader() });
+  }
+
   getRotationApplications() {
     return axios.get(API_URL + 'get-rotation-applications', { headers: authHeader() });
   }
