@@ -4,8 +4,8 @@ class Application(
         private var id: String,
         private var candidateId: String,
         private var positionId: String,
-        private var status: Status = Status.PENDING,
-        private var isRotation: Boolean = false
+        var status: Status = Status.PENDING,
+        var isRotation: Boolean = false
 ) {
     fun getCandidateId(): String {
         return candidateId
@@ -15,6 +15,10 @@ class Application(
         return positionId
     }
 
+    fun getApplicationId(): String {
+        return id
+    }
+
     companion object {
         fun create(result: ApplicationDTO): Application {
             return Application(
@@ -22,7 +26,7 @@ class Application(
                     candidateId = result.candidateId.toString(),
                     positionId = result.positionId.toString(),
                     status = result.status,
-                    isRotation = result.isRotation
+                    isRotation = result.rotation
             )
         }
     }

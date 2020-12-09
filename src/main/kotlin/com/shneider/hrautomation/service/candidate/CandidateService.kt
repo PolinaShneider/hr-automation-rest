@@ -17,9 +17,11 @@ interface CandidateService {
 
     fun deleteCandidate(username: String)
 
-    fun applyForPosition(request: ApplicationRequest)
+    fun applyForPosition(request: ApplicationRequest): String
 
     fun getMyApplications(id: String): List<Application>
 
     fun getMyInterviews(id: String): List<Interview>
+
+    fun getApplication(applicationId: String): Application
 }

@@ -22,6 +22,10 @@ class CandidateServiceImpl(
         private val userRepository: UserRepository,
         private val interviewService: InterviewService
 ) : CandidateService {
+    override fun getApplication(applicationId: String): Application {
+        return applicationService.getApplicationById(applicationId)
+    }
+
     override fun getMyInterviews(id: String): List<Interview> {
         return interviewService.getAllByCandidateId(id)
     }
@@ -30,8 +34,8 @@ class CandidateServiceImpl(
         return applicationService.getApplicationByCandidateId(id);
     }
 
-    override fun applyForPosition(request: ApplicationRequest) {
-        applicationService.saveApplication(request);
+    override fun applyForPosition(request: ApplicationRequest): String {
+        return applicationService.saveApplication(request).getApplicationId();
     }
 
     override fun deleteCandidate(username: String) {

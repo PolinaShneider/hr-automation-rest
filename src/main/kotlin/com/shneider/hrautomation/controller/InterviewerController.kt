@@ -26,10 +26,11 @@ class InterviewerController(
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/{id}/upcoming-interviews")
+    @GetMapping("/{username}/upcoming-interviews")
     fun getInterviews(
-            @PathVariable("id") id: String
+            @PathVariable("username") username: String
     ): ResponseEntity<List<Interview>> {
+        val id = interviewerService.getInterviewerByUsername(username).id;
         val interviews = interviewService.getAllByInterviewerId(id)
         return ResponseEntity(interviews, HttpStatus.OK)
     }

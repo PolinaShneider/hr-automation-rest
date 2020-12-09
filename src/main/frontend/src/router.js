@@ -11,6 +11,9 @@ import MyApplications from "./views/candidate/MyApplications";
 import MyInterviews from "./views/candidate/MyInterviews";
 // Interviewer
 import UpcomingInterviews from "./views/interviewer/UpcomingInterviews";
+// HR
+import RotationApplications from "./views/hr/RotationApplications";
+import ExternalApplications from "./views/hr/ExternalApplications";
 
 Vue.use(Router);
 
@@ -61,6 +64,15 @@ export const router = new Router({
     {
       path: '/upcoming-interviews',
       component: UpcomingInterviews
+    },
+    // HR routes
+    {
+      path: '/rotation-applications',
+      component: RotationApplications
+    },
+    {
+      path: '/external-applications',
+      component: ExternalApplications
     },
   ]
 });

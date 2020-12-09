@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service
 class ApplicationServiceImpl(
         private val applicationRepository: ApplicationRepository
 ) : ApplicationService {
+    override fun postInterviewUpdate(candidateId: ObjectId, positionId: ObjectId, status: Status) {
+        val dto = applicationRepository.findByCandidateIdAndPositionId(candidateId, positionId)
+        applicationRepository.save(dto.copy(status = status))
+    }
+
     override fun listRotationApplications(): List<Application> {
         return applicationRepository.findAllByRotationTrue().map {
             Application.create(it)

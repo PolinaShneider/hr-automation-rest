@@ -1,13 +1,15 @@
 package com.shneider.hrautomation.controller
 
 import com.shneider.hrautomation.data.application.Application
-import com.shneider.hrautomation.data.application.Status
 import com.shneider.hrautomation.data.hr.Hr
+import com.shneider.hrautomation.data.interviewer.Interviewer
 import com.shneider.hrautomation.data.position.Position
 import com.shneider.hrautomation.data.team.Team
 import com.shneider.hrautomation.request.PositionRequest
+import com.shneider.hrautomation.request.StatusRequest
 import com.shneider.hrautomation.service.application.ApplicationService
 import com.shneider.hrautomation.service.hr.HrService
+import com.shneider.hrautomation.service.interviewer.InterviewerService
 import com.shneider.hrautomation.service.position.PositionService
 import com.shneider.hrautomation.service.team.TeamService
 import org.springframework.http.HttpStatus
@@ -23,7 +25,8 @@ class HrController(
         private val hrService: HrService,
         private val positionService: PositionService,
         private val applicationService: ApplicationService,
-        private val teamService: TeamService
+        private val teamService: TeamService,
+        private val interviewerService: InterviewerService
 ) {
     @PostMapping("/create-position")
     fun createPosition(@RequestBody request: PositionRequest): ResponseEntity<Position> {
@@ -52,14 +55,19 @@ class HrController(
         return ResponseEntity(applicationService.listAllApplications(), HttpStatus.OK)
     }
 
+    @GetMapping("/get-interviewers")
+    fun getInterviewers(): ResponseEntity<List<Interviewer>> {
+        return ResponseEntity(interviewerService.getInterviewers(), HttpStatus.OK)
+    }
+
     @GetMapping("/get-rotation-applications")
     fun getRotationApplications(): ResponseEntity<List<Application>> {
         return ResponseEntity(applicationService.listRotationApplications(), HttpStatus.OK)
     }
 
     @PostMapping("/{id}/update-application")
-    fun updateApplication(@PathVariable("id") id: String, status: Status): ResponseEntity<Application> {
-        return ResponseEntity(hrService.updateApplication(id, status), HttpStatus.CREATED)
+    fun updateApplication(@PathVariable("id") id: String, @RequestBody request: StatusRequest): ResponseEntity<Application> {
+        return ResponseEntity(hrService.updateApplication(id, request), HttpStatus.CREATED)
     }
 
     @GetMapping("/{id}")

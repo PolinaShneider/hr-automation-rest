@@ -17,6 +17,10 @@ class InterviewerServiceImpl(
         private val interviewService: InterviewService,
         private val userRepository: UserRepository
 ) : InterviewerService {
+    override fun getInterviewers(): List<Interviewer> {
+        return interviewersRepository.findAll().map { Interviewer.create(it) }
+    }
+
     override fun getInterviewerByUsername(username: String): Interviewer {
         return Interviewer.create(interviewersRepository.findByUsername(username))
     }
@@ -41,7 +45,7 @@ class InterviewerServiceImpl(
         interview.conduct(feedback)
         interviewer.interviews - id
 
-        return interview;
+        return interviewService.saveInterviewResult(interview);
     }
 
     override fun getAvailableInterviewer(): Interviewer {

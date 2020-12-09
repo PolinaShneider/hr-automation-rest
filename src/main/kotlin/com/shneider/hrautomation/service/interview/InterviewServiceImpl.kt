@@ -6,13 +6,22 @@ import com.shneider.hrautomation.data.interview.Interview
 import com.shneider.hrautomation.data.interview.InterviewDTO
 import com.shneider.hrautomation.data.interview.InterviewRepository
 import com.shneider.hrautomation.request.InterviewRequest
+import com.shneider.hrautomation.service.application.ApplicationService
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 
 @Service
 class InterviewServiceImpl(
-        private val interviewsRepository: InterviewRepository
+        private val interviewsRepository: InterviewRepository,
+        private val applicationService: ApplicationService
 ) : InterviewService {
+    override fun saveInterviewResult(interview: Interview): Interview {
+        val original = interviewsRepository.findOneById(ObjectId(interview.id))
+        val dto = interviewsRepository.save(original.copy(feedback = interview.feedback, status = interview.status))
+        applicationService.postInterviewUpdate(ObjectId(interview.candidateId), ObjectId(interview.positionId), interview.status)
+        return Interview.create(dto)
+    }
+
     override fun getAllByCandidateId(id: String): List<Interview> {
         return interviewsRepository.findAllByCandidateId(id).map {
             Interview.create(it)

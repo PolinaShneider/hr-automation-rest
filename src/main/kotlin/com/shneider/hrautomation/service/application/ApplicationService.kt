@@ -3,6 +3,7 @@ package com.shneider.hrautomation.service.application
 import com.shneider.hrautomation.data.application.Application
 import com.shneider.hrautomation.data.application.Status
 import com.shneider.hrautomation.request.ApplicationRequest
+import org.bson.types.ObjectId
 
 
 interface ApplicationService {
@@ -17,4 +18,6 @@ interface ApplicationService {
     fun saveApplication(request: ApplicationRequest): Application
 
     fun updateApplicationStatus(applicationId: String, status: Status): Application
+
+    fun postInterviewUpdate(candidateId: ObjectId, positionId: ObjectId, status: Status)
 }

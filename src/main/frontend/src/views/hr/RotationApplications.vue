@@ -1,11 +1,11 @@
 <template>
     <div>
         <br>
-        <h1>My interviews</h1>
-        <div v-if="!interviews.length">
-            You have no upcoming interviews for now
+        <h1>Rotation applications</h1>
+        <div v-if="!applications.length">
+            There are no rotation applications yet. Probably, they will come soon.
         </div>
-        <div v-else class="interview" v-for="(item, index) in interviews" :key="index">
+        <div v-else class="application" v-for="(item, index) in applications" :key="index">
             <b>{{getPositionTitle(item.positionId)}}</b><br>
             <span class="badge" :class="getStatusClass(item.status)">
                 Status: {{item.status}}
@@ -15,38 +15,37 @@
 </template>
 
 <script>
-  import CandidateService from '../../services/candidate.service';
-
+  import HrService from '../../services/hr.service';
   export default {
-    name: "MyInterviews",
+    name: "RotationApplications",
     data() {
       return {
-        interviews: [],
+        applications: [],
         positions: []
       };
     },
     computed: {
       currentUser() {
         return this.$store.state.auth.user;
-      },
+      }
     },
     mounted() {
-      this.fetchInterviews();
+      this.fetchApplications();
       this.fetchPositions();
     },
     methods: {
-      fetchInterviews() {
-        CandidateService.getMyInterviews(this.currentUser.id).then(({data}) => {
-          this.interviews = data;
+      fetchApplications() {
+        HrService.getRotationApplications().then(({data}) => {
+          this.applications = data;
         }).catch(() => {
-          console.error('Error loading interviews')
+          console.error('Error loading applications')
         })
       },
       fetchPositions() {
-        CandidateService.getPositions().then(({data}) => {
+        HrService.getPositions().then(({data}) => {
           this.positions = data;
         }).catch(() => {
-          console.error('Error loading interviews')
+          console.error('Error loading positions')
         })
       },
       getPositionTitle(id) {
@@ -74,11 +73,12 @@
 </script>
 
 <style scoped>
-    .interview {
+    .application {
         border: 1px solid;
         padding: 20px;
         border-radius: 4px;
         margin: 20px 0;
         position: relative;
+        cursor: pointer;
     }
 </style>

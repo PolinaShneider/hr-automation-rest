@@ -4,14 +4,16 @@
         <br>
         <h1>
             Positions
-            <button @click="modalIsOpen = true">Open new</button>
+            <button @click="createPosition">Open new</button>
         </h1>
         <div v-if="!positions.length">
             There are no opened positions yet. Open one?
         </div>
         <div v-else class="position" v-for="(item, index) in positions" :key="index">
+            <span class="position-edit" @click="() => editPosition(item)">Edit</span>
             <b>{{item.title}}</b><br>
-            Team: {{getTeamTitle(item.teamId)}}
+            Team: {{getTeamTitle(item.teamId)}}<br>
+            Requirements: {{item.requirements}}
         </div>
         <div class="modal-wrapper" v-if="modalIsOpen">
             <span class="close" @click="modalIsOpen = false">Close</span>
@@ -31,9 +33,12 @@
                 </div>
                 <div class="form-group">
                     <label for="team" class="col-form-label">Team</label><br>
-                    <select id="team" v-model="currentPosition.team">
+                    <select id="team" v-model="selected">
                         <option disabled value="">Please select one</option>
-                        <option v-for="(item, index) in teams" :key="index" :value="item.alias">
+                        <option v-for="(item, index) in teams"
+                                :key="index"
+                                :value="item.alias"
+                        >
                             {{item.title}}
                         </option>
                     </select>
@@ -59,6 +64,7 @@
     name: "Positions",
     data() {
       return {
+        selected: '',
         positions: [],
         teams: [],
         modalIsOpen: false,
@@ -88,13 +94,23 @@
         const team = this.teams.find(team => team.alias === id);
         return team ? team.title : '';
       },
+      createPosition() {
+        this.modalIsOpen = true;
+        this.selected = '';
+        Object.assign(this.currentPosition, POSITION_TEMPLATE);
+      },
+      editPosition(position) {
+        this.modalIsOpen = true;
+        this.selected = position.teamId;
+        Object.assign(this.currentPosition, position);
+      },
       savePosition() {
         if (!this.currentPosition.id) {
           HrService.createPosition({
             title: this.currentPosition.title,
             requirements: this.currentPosition.requirements,
             isOpened: this.currentPosition.isOpened,
-            teamId: this.currentPosition.team,
+            teamId: this.selected,
           }).then((data) => {
             // console.log(data);
           })
@@ -103,13 +119,14 @@
             title: this.currentPosition.title,
             requirements: this.currentPosition.requirements,
             isOpened: this.currentPosition.isOpened,
-            teamId: this.currentPosition.team,
+            teamId: this.selected,
           }).then((data) => {
             // console.log(data)
           })
         }
 
-        this.currentPosition = POSITION_TEMPLATE;
+        Object.assign(this.currentPosition, POSITION_TEMPLATE);
+        this.selected = '';
         this.modalIsOpen = false;
         this.fetchPositions();
       }
@@ -117,16 +134,25 @@
   }
 </script>
 
-<style scoped>
+<style>
     .position {
         border: 1px solid;
         padding: 20px;
         border-radius: 4px;
         margin: 20px 0;
+        position: relative;
+    }
+
+    .position-edit {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 16px;
+        cursor: pointer;
     }
 
     .overlay {
-        background: rgba(0,0,0,.25);
+        background: rgba(0, 0, 0, .25);
         position: absolute;
         top: 0;
         bottom: 0;
@@ -152,5 +178,6 @@
         top: 20px;
         right: 20px;
         font-size: 20px;
+        cursor: pointer;
     }
 </style>

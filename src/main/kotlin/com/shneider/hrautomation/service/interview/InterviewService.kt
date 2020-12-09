@@ -17,4 +17,6 @@ interface InterviewService {
     fun getInterview(id: String): Interview
 
     fun getInterviewFeedback(id: String): Feedback
+
+    fun saveInterviewResult(interview: Interview): Interview
 }

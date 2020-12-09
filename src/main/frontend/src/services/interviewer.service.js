@@ -13,7 +13,7 @@ class InterviewerService {
   }
 
   conductInterview(id, feedback) {
-    return axios.post(API_URL + `/conduct-interview/${id}`, {feedback}, { headers: authHeader() });
+    return axios.post(API_URL + `conduct-interview/${id}`, {feedback}, { headers: authHeader() });
   }
 }
 

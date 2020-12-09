@@ -28,6 +28,10 @@ class HrService {
     return axios.get(API_URL + 'get-applications', { headers: authHeader() });
   }
 
+  getInterviewers() {
+    return axios.get(API_URL + 'get-interviewers', { headers: authHeader() });
+  }
+
   getRotationApplications() {
     return axios.get(API_URL + 'get-rotation-applications', { headers: authHeader() });
   }
