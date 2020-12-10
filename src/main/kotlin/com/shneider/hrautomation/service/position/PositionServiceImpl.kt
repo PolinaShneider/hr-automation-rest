@@ -26,13 +26,13 @@ class PositionServiceImpl(
     }
 
     override fun listAllPositions(): List<Position> {
-        return positionRepository.findAll().map {
+        return positionRepository.findAllByOpenTrueOrderByModifiedDateDesc().map {
             Position.create(it)
         }
     }
 
     override fun listOpenPositions(): List<Position> {
-        return positionRepository.findAllByOpenTrue().map {
+        return positionRepository.findAllByOpenTrueOrderByModifiedDateDesc().map {
             Position.create(it)
         }
     }

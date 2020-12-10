@@ -4,7 +4,7 @@ import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 
 interface PositionRepository : MongoRepository<PositionDTO, String> {
-    fun findAllByOpenTrue(): List<PositionDTO>
+    fun findAllByOpenTrueOrderByModifiedDateDesc(): List<PositionDTO>
 
     fun findOneById(id: ObjectId): PositionDTO
 }

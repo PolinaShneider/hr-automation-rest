@@ -134,9 +134,6 @@
           HrService.getInterviewInfo(link).then(({data}) => {
             const feedback = data.feedback;
 
-
-            console.log(data.feedback);
-
             if (feedback === 'ACCEPTED') {
               alert('Фидбэк положительный')
             } else if (feedback === 'FAIL') {

@@ -24,7 +24,7 @@ class ApplicationServiceImpl(
     }
 
     override fun listRotationApplications(): List<Application> {
-        return applicationRepository.findAllByRotationTrue().map {
+        return applicationRepository.findAllByRotationTrueOrderByModifiedDateDesc().map {
             Application.create(it)
         }
     }
@@ -43,7 +43,7 @@ class ApplicationServiceImpl(
     }
 
     override fun getApplicationByCandidateId(id: String): List<Application> {
-        return applicationRepository.findAllByCandidateId(ObjectId(id)).toList().map {
+        return applicationRepository.findAllByCandidateIdOrderByModifiedDateDesc(ObjectId(id)).toList().map {
             Application.create(it)
         };
     }

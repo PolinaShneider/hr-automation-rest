@@ -23,7 +23,7 @@ class InterviewServiceImpl(
     }
 
     override fun getAllByCandidateId(id: String): List<Interview> {
-        return interviewsRepository.findAllByCandidateId(id).map {
+        return interviewsRepository.findAllByCandidateIdOrderByModifiedDateDesc(id).map {
             Interview.create(it)
         }
     }
@@ -63,7 +63,7 @@ class InterviewServiceImpl(
     }
 
     override fun getAllByInterviewerId(id: String): List<Interview> {
-        return interviewsRepository.findAllByInterviewerId(ObjectId(id)).map {
+        return interviewsRepository.findAllByInterviewerIdOrderByModifiedDateDesc(ObjectId(id)).map {
             Interview.create(it)
         }
     }
