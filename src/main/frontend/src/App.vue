@@ -122,7 +122,7 @@
           default:
             return []
         }
-      }
+      },
     }
   };
 </script>
