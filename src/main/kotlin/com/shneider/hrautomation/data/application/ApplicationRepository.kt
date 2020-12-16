@@ -8,4 +8,5 @@ interface ApplicationRepository : MongoRepository<ApplicationDTO, String> {
     fun findAllByCandidateIdOrderByModifiedDateDesc(candidateId: ObjectId): List<ApplicationDTO>
     fun findAllByRotationTrueOrderByModifiedDateDesc(): List<ApplicationDTO>
     fun findByCandidateIdAndPositionId(candidateId: ObjectId, positionId: ObjectId): ApplicationDTO
+    fun findAllByRotationFalseOrderByModifiedDateDesc(): List<ApplicationDTO>
 }

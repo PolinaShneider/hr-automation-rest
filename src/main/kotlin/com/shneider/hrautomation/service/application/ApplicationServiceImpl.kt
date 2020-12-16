@@ -37,7 +37,7 @@ class ApplicationServiceImpl(
     }
 
     override fun listAllApplications(): List<Application> {
-        return applicationRepository.findAll().map {
+        return applicationRepository.findAllByRotationFalseOrderByModifiedDateDesc().map {
             Application.create(it)
         }
     }
